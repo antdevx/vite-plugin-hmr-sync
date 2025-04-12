@@ -22,6 +22,23 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/npm",
-    "@semantic-release/github"
+    "@semantic-release/git",
+    "@semantic-release/github",
+    {
+      "assets": [
+        {
+          "path": "CHANGELOG.md",
+          "label": "Changelog"
+        },
+        {
+          "path": "dist/*.js",
+          "label": "JavaScript files"
+        },
+        {
+          "path": "dist/*.d.ts",
+          "label": "TypeScript declaration files"
+        }
+      ]
+    }
   ]
 }
