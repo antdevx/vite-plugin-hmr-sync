@@ -1,6 +1,6 @@
 {
   "branches": [
-    "main",
+    "refs/heads/main",
     {
       "name": "next",
       "prerelease": true

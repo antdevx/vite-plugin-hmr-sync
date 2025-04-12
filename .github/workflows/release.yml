@@ -37,6 +37,11 @@ jobs:
           git checkout main
           git pull origin main
 
+      - name: Debug Git references
+        run: |
+          git branch -a
+          git show-ref
+
       - name: 🎫 Create release-temp branch
         run: |
           git checkout -b release-temp
