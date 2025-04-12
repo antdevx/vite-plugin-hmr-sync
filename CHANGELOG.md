@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/antdevx/vite-plugin-hmr-sync/compare/v1.0.1...v1.0.2) (2025-04-12)
+
+
+### Bug Fixes
+
+* workflow failure fix ([e4c083a](https://github.com/antdevx/vite-plugin-hmr-sync/commit/e4c083adff1e325f7ea96d80f26163b2b2980127))
+
 ## [1.0.1](https://github.com/antdevx/vite-plugin-hmr-sync/compare/v1.0.0...v1.0.1) (2025-04-12)
 
 
