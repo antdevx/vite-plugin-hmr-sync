@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Ensures full commit history is fetched
-          persist-credentials: false # <--- this
+          persist-credentials: true # <--- this
 
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
