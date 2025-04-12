@@ -40,6 +40,31 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
 
+  sync-release-to-main:
+    name: 🔁 Create PR to sync release-temp → main
+    runs-on: ubuntu-latest
+    needs: release
+    if: success()
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: release-temp
+          fetch-depth: 0
+
+      - name: 🔀 Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.ANTDEVX_GH_PAT }}
+          base: main
+          branch: release-temp
+          title: "🔀 Sync release changes from release-temp → main"
+          body: |
+            This PR syncs the release changes (e.g., changelog, version bumps) from `release-temp` back into `main`.
+          commit-message: "chore(sync): merge release changes back to main"
+          delete-branch: false
+
   cleanup:
     name: 🧹 Delete release-temp branch
     runs-on: ubuntu-latest
