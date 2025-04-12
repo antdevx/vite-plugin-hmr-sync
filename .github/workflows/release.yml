@@ -23,7 +23,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Ensures full commit history is fetched
-          persist-credentials: true # <--- this
 
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
@@ -39,6 +38,6 @@ jobs:
 
       - name: 🚀 Release with semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN  }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
