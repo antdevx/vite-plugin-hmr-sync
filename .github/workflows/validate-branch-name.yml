@@ -11,8 +11,15 @@ jobs:
       - name: Validate branch name
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
-          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|docs|chore|refactor|test|release)/[a-z0-9._-]+$ ]]; then
+          # Exclude main and dev branches from the naming convention
+          if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "dev" ]]; then
+            echo "✅ Skipping branch name validation for $BRANCH_NAME"
+            exit 0
+          fi
+          # Validate branch name for all other branches with the expanded pattern
+          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|docs|chore|refactor|test|release|ci|build|perf|revert|hotfix)/[a-z0-9._-]+$ ]]; then
             echo "\033[31m❌ Invalid branch name: $BRANCH_NAME"
             echo "Branch names must follow pattern: type/short-description (e.g. feat/add-hmr-support)"
             exit 1
           fi
+          echo "✅ Valid branch name: $BRANCH_NAME"
