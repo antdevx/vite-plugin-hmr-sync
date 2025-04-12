@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/antdevx/vite-plugin-hmr-sync/compare/v1.0.0...v1.0.1) (2025-04-12)
+
+
+### Bug Fixes
+
+* update version to 1.0.1 in package.json and package-lock.json ([34664d0](https://github.com/antdevx/vite-plugin-hmr-sync/commit/34664d0cb40a816d9ceaf6e30b8d7ecf63fc07d7))
+
 ### Features
 
 * add CODEOWNERS, CONTRIBUTING guide, PR template, and branch name validation workflow ([2920209](https://github.com/antdevx/vite-plugin-hmr-sync/commit/2920209b5306d70ea4b2466f3bfa6c6e54667985))
