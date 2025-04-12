@@ -3,11 +3,35 @@ import type { Plugin, ViteDevServer } from 'vite';
 import { IListenOptions } from './interface/listen.interface';
 
 /**
- * Vite plugin to listen for rebuild signals from a child process.
+ * Listens for remote rebuild signals and triggers a Hot Module Replacement (HMR) reload
+ * in a Vite development server. This plugin is useful for synchronizing rebuilds across
+ * multiple applications or environments.
  *
- * @export
- * @param {IListenOptions} [options={}]
- * @return {*}  {Plugin}
+ * @param options - Configuration options for the plugin.
+ * @param options.onRebuild - Optional callback function invoked after a rebuild is triggered.
+ * @param options.endpoint - The HTTP endpoint to listen for rebuild signals. Defaults to `'/on-child-rebuild'`.
+ * @param options.hotPayload - The payload sent to the Vite WebSocket server to trigger HMR. Defaults to `{ type: 'full-reload', path: '*' }`.
+ * @param options.allowedApps - An optional array of app names allowed to trigger rebuilds. If specified, rebuilds from unlisted apps are ignored.
+ * @param options.suppressLogs - Whether to suppress log messages. Defaults to `false`.
+ *
+ * @returns A Vite plugin object that listens for remote rebuild signals.
+ *
+ * @example
+ * ```typescript
+ * import { listenForRemoteRebuilds } from './listen-plugin';
+ *
+ * export default defineConfig({
+ *   plugins: [
+ *     listenForRemoteRebuilds({
+ *       endpoint: '/custom-endpoint',
+ *       allowedApps: ['app1', 'app2'],
+ *       onRebuild: (appName, server) => {
+ *         console.log(`Rebuild triggered by ${appName}`);
+ *       }
+ *     })
+ *   ]
+ * });
+ * ```
  */
 export function listenForRemoteRebuilds(options: IListenOptions = {}): Plugin {
   const {

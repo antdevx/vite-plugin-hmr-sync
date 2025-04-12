@@ -6,11 +6,46 @@ import { URL } from 'node:url';
 import { INotifyOptions } from './interface/notify.interface';
 
 /**
- * Vite plugin to notify the host server when a child process rebuilds.
+ * A Vite plugin that sends a notification to a specified host when the build process ends.
+ * The notification can be customized to trigger only on successful builds or on all builds.
  *
- * @export
- * @param {string | INotifyOptions} options - App name or options object.
- * @return {*}  {Plugin}
+ * @param options - Configuration options for the plugin. Can be a string representing the `appName`
+ *                  or an object implementing the `INotifyOptions` interface.
+ * 
+ * @returns A Vite plugin object with a `buildEnd` hook to handle notifications.
+ *
+ * @example
+ * ```typescript
+ * import { notifyOnRebuild } from './notify-plugin';
+ *
+ * export default defineConfig({
+ *   plugins: [
+ *     notifyOnRebuild({
+ *       appName: 'my-app',
+ *       hostUrl: 'http://localhost:9000',
+ *       endpoint: '/notify',
+ *       method: 'POST',
+ *       notifyOnSuccessOnly: false,
+ *       suppressLogs: true,
+ *     }),
+ *   ],
+ * });
+ * ```
+ *
+ * @remarks
+ * - The `appName` option is required and identifies the application being built.
+ * - If `notifyOnSuccessOnly` is `true`, notifications will only be sent for successful builds.
+ * - Logs can be suppressed by setting `suppressLogs` to `true`.
+ * - The plugin sends an HTTP or HTTPS request to the specified `hostUrl` and `endpoint`.
+ *
+ * @throws Will log an error if the `appName` is not provided or if the constructed URL is invalid.
+ *
+ * @param options.appName - The name of the application being built. (Required)
+ * @param options.hostUrl - The base URL of the host to notify. Defaults to `'http://127.0.0.1:9000'`.
+ * @param options.endpoint - The endpoint path to notify. Defaults to `'/on-child-rebuild'`.
+ * @param options.method - The HTTP method to use for the notification. Defaults to `'GET'`.
+ * @param options.notifyOnSuccessOnly - Whether to notify only on successful builds. Defaults to `true`.
+ * @param options.suppressLogs - Whether to suppress logs in the console. Defaults to `false`.
  */
 export function notifyOnRebuild(appName: string): Plugin
 export function notifyOnRebuild(options: INotifyOptions): Plugin
