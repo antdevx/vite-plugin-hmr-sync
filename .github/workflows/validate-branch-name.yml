@@ -1,0 +1,18 @@
+name: Enforce Branch Name Convention
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|docs|chore|refactor|test|release)/[a-z0-9._-]+$ ]]; then
+            echo "\033[31m❌ Invalid branch name: $BRANCH_NAME"
+            echo "Branch names must follow pattern: type/short-description (e.g. feat/add-hmr-support)"
+            exit 1
+          fi
