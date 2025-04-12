@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }} # This ensures the GitHub Actions bot can push
+          token: ${{ secrets.ANTDEVX_GH_PAT }} # This ensures the GitHub Actions bot can push
 
       - name: ⚒️ Configure Git
         run: |
