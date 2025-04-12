@@ -1,21 +1,22 @@
 name: Release to GitHub and npm
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
-      - main
+      - main # or main
 
 permissions:
-  contents: write
-  packages: write
-  id-token: write
-  pull-requests: write
+  contents: read # for checkout
 
 jobs:
   release:
-    if: github.event.pull_request.merged == true
+    name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
 
     steps:
       - name: ⬇️ Checkout code
