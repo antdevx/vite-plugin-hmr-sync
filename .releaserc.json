@@ -1,6 +1,7 @@
 {
   "branches": [
     "main",
+    "release-temp",
     {
       "name": "next",
       "prerelease": true
@@ -15,8 +16,7 @@
     {
       "name": "hotfix/*",
       "prerelease": false
-    },
-    "release-temp"
+    }
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
