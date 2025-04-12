@@ -55,12 +55,17 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
 
-      - name: 🚀 Auto-merge the PR using GitHub CLI
-        run: |
-          PR_URL=$(gh pr list --base main --head release-temp --json url --jq '.[0].url')
-          gh pr merge "$PR_URL" --merge --auto --delete-branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.ANTDEVX_GH_PAT }}
+      - name: 🔁 Create Pull Request to sync release-temp → main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.ANTDEVX_GH_PAT }}
+          base: main
+          branch: release-temp
+          title: "🔀 Sync release changes from release-temp → main"
+          body: |
+            This PR syncs the release changes (e.g., changelog, version bumps) from `release-temp` back into `main`.
+          commit-message: "chore(sync): merge release changes back to main"
+          delete-branch: false
 
       - name: 🧹 Delete release-temp branch after merge
         run: |
