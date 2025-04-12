@@ -33,6 +33,7 @@ jobs:
 
       - name: 📈 Sync with latest main
         run: |
+          git fetch --all
           git checkout main
           git pull origin main
 
