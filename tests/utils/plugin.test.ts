@@ -31,6 +31,7 @@ describe('notifyOnRebuild', () => {
     const plugin = notifyOnRebuild('test-app');
     const error = null;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (plugin as any).buildEnd(error);
 
     expect(sendNotification).toHaveBeenCalledWith(
@@ -41,6 +42,7 @@ describe('notifyOnRebuild', () => {
 
   it('should handle invalid options gracefully', () => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       notifyOnRebuild({} as any);
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
@@ -63,6 +65,7 @@ describe('listenForRemoteRebuilds', () => {
     } as unknown as ViteDevServer;
 
     const plugin = listenForRemoteRebuilds({ endpoint: '/custom-endpoint' });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (plugin as any).configureServer?.(server);
 
     expect(server.middlewares.use).toHaveBeenCalledWith(
@@ -84,6 +87,7 @@ describe('listenForRemoteRebuilds', () => {
 
     const options = { endpoint: '/custom-endpoint' };
     const plugin = listenForRemoteRebuilds(options);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (plugin as any).configureServer?.(server);
 
     expect(handleRemoteRebuildRequest).toHaveBeenCalledWith(

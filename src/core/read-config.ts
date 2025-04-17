@@ -16,7 +16,8 @@ export function readNodemonHmrSyncConfig(): IStartServerOptions {
     const raw = readFileSync(configPath, 'utf-8');
     const parsed = JSON.parse(raw);
     return parsed.hmrSync || {};
-  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_err) {
     console.warn('[vite-plugin-hmr-sync] Failed to read nodemon.json config');
     return {};
   }

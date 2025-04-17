@@ -1,7 +1,9 @@
+import http from 'node:http';
 import type { HotPayload, ViteDevServer } from 'vite';
-import type { IListenOptions } from '../interface/listen.interface';
-import { DEFAULT_HOT_PAYLOAD } from '../utils/constants';
+
 import { Logger } from '../../src/utils/logger';
+import { DEFAULT_HOT_PAYLOAD } from '../utils/constants';
+import type { IListenOptions } from '../interface/listen.interface';
 
 /**
  * Handles incoming requests to trigger a rebuild in the Vite server.
@@ -16,8 +18,8 @@ import { Logger } from '../../src/utils/logger';
  */
 export function handleRemoteRebuildRequest(
   server: ViteDevServer,
-  req: any,
-  res: any,
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
   options: IListenOptions,
   pluginName: string
 ): void {

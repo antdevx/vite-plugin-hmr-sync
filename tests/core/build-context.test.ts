@@ -36,6 +36,7 @@ describe('normalizeNotifyOptions', () => {
   });
 
   it('should throw an error if appName is missing', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(() => normalizeNotifyOptions({} as any)).toThrowError('`appName` is required');
   });
 });
