@@ -1,42 +1,72 @@
-name: Release to GitHub and npm
+name: Prepare and Release
 
 on:
   push:
     branches:
-      - main # or main
+      - main
 
 permissions:
-  contents: read # for checkout
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
 
     steps:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensures full commit history is fetched
+          fetch-depth: 0
+          token: ${{ secrets.ANTDEVX_GH_PAT }}
 
-      - name: 🟢 Setup Node.js
+      - name: ⚒️ Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: 📈 Sync with latest main
+        run: |
+          git checkout main
+          git pull origin main
+
+      - name: 🎫 Create release-temp branch
+        run: |
+          git checkout -B release-temp
+          git push origin release-temp --force
+
+      - name: 🚀 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org/'
 
-      - name: 📦 Install deps
+      - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🔨 Build
+      - name: ⚖️ Build project
         run: npm run build
 
-      - name: 🚀 Release with semantic-release
+      - name: 🚀 Run semantic-release
         env:
+          GITHUB_TOKEN: ${{ secrets.ANTDEVX_GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
+
+      - name: 🔁 Create Pull Request to sync release-temp → main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.ANTDEVX_GH_PAT }}
+          base: main
+          branch: release-temp
+          title: "🔀 Sync release changes from release-temp → main"
+          body: |
+            This PR syncs the release changes (e.g., changelog, version bumps) from `release-temp` back into `main`.
+          commit-message: "chore(sync): merge release changes back to main"
+          delete-branch: false
+
+      - name: 🧹 Delete release-temp branch after merge
+        run: |
+          git push origin --delete release-temp || true
