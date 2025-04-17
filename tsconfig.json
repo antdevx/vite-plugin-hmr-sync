@@ -23,7 +23,8 @@
     "types": [
       "node",
       "vite/client"
-    ]
+    ],
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts"
