@@ -33,3 +33,17 @@ export interface IListenOptions {
    */
   suppressLogs?: boolean;
 }
+
+/**
+ * Normalizes the options for the listen system.
+ *
+ * @export
+ * @interface IListenNormalizeOptions
+ * @extends {Required<Omit<IListenOptions, 'onRebuild'>>}
+ */
+export interface IListenNormalizeOptions extends Required<Omit<IListenOptions, 'onRebuild'>> {
+  /**
+   * Callback function to be executed after a rebuild is triggered
+   */
+  onRebuild?: (appName: string, server: ViteDevServer) => void;
+}

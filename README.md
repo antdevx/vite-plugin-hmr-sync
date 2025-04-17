@@ -130,6 +130,56 @@ Notifies a remote server (e.g., host app) after a successful rebuild.
 
 ---
 
+## 📁 Nodemon + HMR Sync Setup
+
+Use `startBuildAndServer()` to auto-build and serve your app with rebuild notifications.
+
+### 🔧 `nodemon.json` Example
+
+```json
+{
+  "watch": [
+    "src",
+    "quasar.config.ts"
+  ],
+  "ext": "js,ts,vue,scss,json",
+  "exec": "node -e \"import('@antdevx/vite-plugin-hmr-sync').then(m => m.startBuildAndServer())\"",
+  "hmrSync": {
+    "port": 5002,
+    "notify": true,
+    "hostUrl": "http://localhost:5000",
+    "appName": "todo-form",
+    "buildCommand": "quasar build",
+    "serveCommand": "quasar serve"
+  }
+}
+```
+
+### 📜 `package.json`
+
+```json
+"scripts": {
+  "build:watch": "nodemon"
+}
+```
+
+---
+
+## 🛠 Available `hmrSync` / `startBuildAndServer()` Options
+
+| Option         | Type      | Default          | Description |
+|----------------|-----------|------------------|-------------|
+| `notify`       | `boolean` | `true`           | Whether to notify the host after successful rebuild. |
+| `hostUrl`      | `string`  | —                | The full URL of the host app to notify (e.g. `http://localhost:5000`). |
+| `appName`      | `string`  | —                | Name of your app. Used in the query string to identify rebuild origin. |
+| `port`         | `string`  | —                | Port number to serve your local dev preview. |
+| `cache`        | `string`  | `'0'`            | Time (in seconds) to cache the static files. `0` means no caching. |
+| `cors`         | `boolean` | `true`           | Enable CORS headers for the dev server. |
+| `buildCommand` | `string`  | `'quasar build'` or `'vite build'` | Command used to build the app before serving. |
+| `serveCommand` | `string`  | `'quasar serve'` or `'vite preview'` | Command used to start the static server after build. |
+
+---
+
 ## 🔗 Workflow Overview
 
 ```
@@ -178,4 +228,3 @@ MIT © antdevx
 ## 🙌 Like it?
 
 Star ⭐ the repo and share with others using Vite and micro-frontends!
-
