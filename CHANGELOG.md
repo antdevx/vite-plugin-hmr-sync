@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/antdevx/vite-plugin-hmr-sync/compare/v1.0.3...v1.1.0) (2025-04-17)
+
+
+### Features
+
+* implement server startup and notification features ([d4e0d4c](https://github.com/antdevx/vite-plugin-hmr-sync/commit/d4e0d4cd13b4aa586e312becfd7200e393745a25))
+
 ## [1.0.3](https://github.com/antdevx/vite-plugin-hmr-sync/compare/v1.0.2...v1.0.3) (2025-04-12)
 
 
