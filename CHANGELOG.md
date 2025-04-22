@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/antdevx/vite-plugin-hmr-sync/compare/v1.1.1...v1.1.2) (2025-04-22)
+
+
+### Bug Fixes
+
+* update npm registry URL in .npmrc configuration ([9816258](https://github.com/antdevx/vite-plugin-hmr-sync/commit/9816258311c0fded365ea64ddeed5a57318a9862))
+
 ## [1.1.1](https://github.com/antdevx/vite-plugin-hmr-sync/compare/v1.1.0...v1.1.1) (2025-04-22)
 
 
